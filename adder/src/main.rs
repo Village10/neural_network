@@ -1,4 +1,4 @@
-use neural_network;
+use rusty_neurons;
 
 fn main() {
     println!("Hello, world!");
