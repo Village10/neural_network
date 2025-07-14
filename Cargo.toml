@@ -3,3 +3,4 @@ members = [
     "adder",
     "neural_network"
 ]
+resolver = "3"
