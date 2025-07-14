@@ -485,15 +485,16 @@ impl NeuralNetwork {
     /// network.initialize(InitType::Random {min: -0.7, max: 0.4});
     ///
     ///
-    /// let x = (0..10).map(|_| vec![rng().random_range(-5.0..5.0)]).collect::<Vec<Vec<f64>>>();
-    /// let y = x.map(|i| i[0] + i[1]);
+    /// // Creates training data
+    /// let x = (0..10).map(|_| vec![rng().random_range(-5.0..5.0), rng().random_range(-5.0..5.0)]).collect::<Vec<Vec<f64>>>();
+    /// let y = x.iter().map(|i| vec![i[0] + i[1]]).collect::<Vec<Vec<f64>>>();
     ///
     /// // Trains the network with x and y for 50 epochs.
     /// network.train(x, y, 50);
     /// ```
     /// # Panics
     /// * When network has not been initialized
-    pub fn train(&mut self, x: Vec<f64>, y: Vec<f64>, epochs: i32) {
+    pub fn train(&mut self, x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, epochs: i32) {
         self.check_initialized();
         for epoch in 0..epochs {
 

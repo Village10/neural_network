@@ -26,8 +26,8 @@ let mut network = NeuralNetwork::new(2, vec![4, 2], 1, ActivationFunction::ReLU,
 network.initialize(InitType::Random {min: -0.7, max: 0.4});
 
 // Creates training data
-let x = (0..10).map(|_| vec![rng().random_range(-5.0..5.0)]).collect::<Vec<Vec<f64>>>();
-let y = x.map(|i| i[0] + i[1]);
+let x = (0..10).map(|_| vec![rng().random_range(-5.0..5.0), rng().random_range(-5.0..5.0)]).collect::<Vec<Vec<f64>>>();
+let y = x.iter().map(|i| vec![i[0] + i[1]]).collect::<Vec<Vec<f64>>>();
 
 // Trains the network with x and y for 50 epochs.
 network.train(x, y, 50);
