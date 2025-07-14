@@ -17,7 +17,7 @@ rusty_neurons = "0.1.0"
 
 ```rust
 use rand::{rng, Rng};
-use rusy_neurons::{ActivationFunction, InitType, NeuralNetwork};
+use rusty_neurons::{ActivationFunction, InitType, NeuralNetwork};
 
 // Creates the network 
 let mut network = NeuralNetwork::new(2, vec![4, 2], 1, ActivationFunction::ReLU, ActivationFunction::Sigmoid );
