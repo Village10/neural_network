@@ -1,0 +1,15 @@
+[package]
+name = "rusty_neurons"
+version = "0.1.0"
+edition = "2024"
+authors = ["Village10"]
+repository = "https://github.com/Village10/neural_network"
+homepage = "https://github.com/Village10/neural_network"
+description = "A library aimed at creating Neural Networks easily."
+license = "MIT OR Apache-2.0"
+categories = ["science"]
+keywords = ["rust","simple", "neural-network", "machine-learning", "deep-learning"]
+readme = "Readme.md"
+
+[dependencies]
+rand = "0.9.1"

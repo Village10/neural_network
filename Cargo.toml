@@ -1,6 +1,6 @@
 [workspace]
 members = [
     "adder",
-    "neural_network"
+    "rusty_neurons"
 ]
 resolver = "3"

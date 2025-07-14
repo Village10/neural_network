@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-neural_network = { path = "../neural_network" }
+rusty_neurons = { path = "../rusty_neurons" }

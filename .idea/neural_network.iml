@@ -3,9 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/adder/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/neural_network/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/rusty_neurons/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/adder/target" />
-      <excludeFolder url="file://$MODULE_DIR$/neural_network/target" />
+      <excludeFolder url="file://$MODULE_DIR$/rusty_neurons/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
