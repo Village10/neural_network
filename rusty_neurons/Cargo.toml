@@ -9,7 +9,7 @@ description = "A library aimed at creating Neural Networks easily."
 license = "MIT OR Apache-2.0"
 categories = ["science"]
 keywords = ["rust","simple", "neural-network", "machine-learning", "deep-learning"]
-readme = "Readme.md"
+readme = "../Readme.md"
 
 [dependencies]
 rand = "0.9.1"
