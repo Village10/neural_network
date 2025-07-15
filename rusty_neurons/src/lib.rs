@@ -2,6 +2,9 @@
 
 //! A library aimed at creating Neural Networks easily.
 
+use rand::prelude::SliceRandom;
+use rand::rng;
+
 mod utils;
 
 /// Initialization types for use in [`NeuralNetwork::initialize()`] when randomizing weights and biases
@@ -486,39 +489,80 @@ impl NeuralNetwork {
     ///
     ///
     /// // Creates training data
+    /// let x = (0..100).map(|_| vec![rng().random_range(-5.0..5.0), rng().random_range(-5.0..5.0)]).collect::<Vec<Vec<f64>>>();
+    /// let y = x.iter().map(|i| vec![i[0] + i[1]]).collect::<Vec<Vec<f64>>>();
+    ///
+    /// // Trains the network with x and y for 50 epochs, with a batch size of 10.
+    /// network.train(x, y, 50, 10);
+    /// ```
+    /// # Panics
+    /// * When network has not been initialized
+    pub fn train(&mut self, x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, epochs: i32, batch_size: i32) {
+        self.check_initialized();
+        assert_eq!(x.len(), y.len(), "X and y must have the same length.");
+
+        for epoch in 0..epochs {
+            let mut zipped = x.iter().zip(y.iter()).collect::<Vec<(&Vec<f64>, &Vec<f64>)>>();
+            zipped.shuffle(&mut rng());
+            let (shuffled_x, shuffled_y): (Vec<&Vec<f64>>, Vec<&Vec<f64>>) = zipped.into_iter().unzip();
+            for batch in 0..(shuffled_y.len() as i32 + batch_size - 1) / batch_size {
+                let batch_start = (batch * batch_size) as usize;
+                let batch_end = ((batch + 1) * batch_size).min(shuffled_y.len() as i32) as usize;
+                let batch_x = &shuffled_x[batch_start..batch_end];
+                let batch_y = &shuffled_y[batch_start..batch_end];
+                for (sample_x, sample_y) in batch_x.iter().zip(batch_y.iter()) {
+                    // Do stuff
+                }
+            }
+        }
+    }
+
+    /// Saves the network to a specified path.
+    ///
+    /// # Example
+    /// ```rust
+    /// use rand::{rng, Rng};
+    /// use rusty_neurons::{ActivationFunction, InitType, NeuralNetwork};
+    ///
+    /// // Create network
+    /// let mut network = NeuralNetwork::new(2, vec![4, 2], 1, ActivationFunction::ReLU, ActivationFunction::Sigmoid );
+    ///
+    /// // Fills weights and biases with random numbers from -0.7 to 0.4
+    /// network.initialize(InitType::Random {min: -0.7, max: 0.4});
+    ///
+    ///
+    /// // Creates training data
     /// let x = (0..10).map(|_| vec![rng().random_range(-5.0..5.0), rng().random_range(-5.0..5.0)]).collect::<Vec<Vec<f64>>>();
     /// let y = x.iter().map(|i| vec![i[0] + i[1]]).collect::<Vec<Vec<f64>>>();
     ///
     /// // Trains the network with x and y for 50 epochs.
-    /// network.train(x, y, 50);
+    /// network.train(x, y, 50, 10);
     /// ```
+    ///
     /// # Panics
     /// * When network has not been initialized
-    pub fn train(&mut self, x: Vec<Vec<f64>>, y: Vec<Vec<f64>>, epochs: i32) {
+    pub fn save(&self) {
         self.check_initialized();
-        for epoch in 0..epochs {
-
-        }
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use rand::Rng;
     use super::*;
 
     #[test]
     fn make_network() {
-        let mut network = NeuralNetwork::new(
-            3,
-            vec![4, 3],
-            1,
-            ActivationFunction::ReLU,
-            ActivationFunction::Sigmoid,
-        );
+        let mut network = NeuralNetwork::new(2, vec![4, 2], 1, ActivationFunction::ReLU, ActivationFunction::Sigmoid );
 
-        network.initialize(InitType::UniformXavier);
+        // Fills weights and biases with random numbers from -0.7 to 0.4
+        network.initialize(InitType::Random {min: -0.7, max: 0.4});
 
-        println!("{:#?}", network.run(vec![5.0, 0.0, 0.0]));
-        println!("{:#?}", network.run(vec![1.0, 2.0, 0.0]));
+        // Creates training data
+        let x = (0..3).map(|_| vec![rng().random_range(-5.0..5.0), rng().random_range(-5.0..5.0)]).collect::<Vec<Vec<f64>>>();
+        let y = x.iter().map(|i| vec![i[0] + i[1]]).collect::<Vec<Vec<f64>>>();
+
+        // Trains the network with x and y for 1 epoch, with a batch size of 2.
+        network.train(x, y, 2, 2);
     }
 }
